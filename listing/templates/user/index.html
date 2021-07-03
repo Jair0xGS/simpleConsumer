@@ -1,0 +1,72 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Simple listing{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <form>
+        <div class="row">
+            <div class="col">
+                <h2>Busqueda por nombre y RUC</h2>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    data-bs-whatever="@mdo">Agregar</button>
+            </div>
+        </div>
+
+        <div class="row pt-5">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre </label>
+                    <input type="text" class="form-control" id="nombre">
+                </div>
+
+            </div>
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="ruc" class="form-label">RUC</label>
+                    <input type="number" class="form-control" id="ruc">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Buscar</button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {% include 'user/components/create.html' %}
+
+</div>
+{% endblock %}
