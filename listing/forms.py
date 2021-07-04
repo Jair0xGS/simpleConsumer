@@ -1,34 +1,29 @@
 from django import forms
-from .models import Zona,Cliente
-from .validations import validate_ruc
+from .models import Zona, Cliente
+from .validations import validate_ruc,validate_cliente
 
 
+# form to create new Client
+zonas = Zona.objects.all()
 class ClientForm(forms.ModelForm):
-    #zonas = Zona.objects.all()
-    cliente= forms.CharField(label="ID Cliente")
+    cliente = forms.CharField(label="ID Cliente",validators=[validate_cliente])
     cliente.widget.attrs.update({'class': 'form-control'})
-    nombre= forms.CharField(label="Nombre")
-    nombre.widget.attrs.update({'class': 'form-control'})
-    zonaid = forms.Mode
-   #zonaid= forms.ChoiceField(
-   #    label="Zona",
-   #    choices=[
-   #        (
-   #            zn.zona,
-   #            zn.descripcion
-   #            + ' - '
-   #            +zn .ciudad
-   #        ) for zn in zonas
-   #    ]
 
-   #)
-   #zonaid.widget.attrs.update({'class': 'form-control'})
+    nombre = forms.CharField(label="Nombre")
+    nombre.widget.attrs.update({'class': 'form-control'})
+
     ruc = forms.IntegerField(label="RUC",validators=[validate_ruc])
     ruc.widget.attrs.update({'class': 'form-control'})
+
+    zona = forms.ModelChoiceField(zonas)
+    zona.widget.attrs.update({'class': 'form-control'})
+
     direccion= forms.CharField(label="Direccion")
     direccion.widget.attrs.update({'class': 'form-control'})
-    credito = forms.BooleanField(label="Con Credito")
+
+    credito = forms.BooleanField(label="Con Credito",required=False)
     credito.widget.attrs.update({'class': 'form-check-input'})
+
     tipoCliente= forms.ChoiceField(
         label='Tipo Cliente',
         choices=(
@@ -45,10 +40,11 @@ class ClientForm(forms.ModelForm):
         fields = [
             'cliente',
             'nombre',
-            'zona',
             'ruc',
+            'zona',
             'direccion',
             'credito',
             'tipoCliente',
 
         ]
+# form 
