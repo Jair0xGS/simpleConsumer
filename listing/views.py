@@ -55,6 +55,8 @@ class ClientView(View):
         if form.is_valid():
             form.save()
             template = loader.get_template('user\\index.html')
+            form = FindClientForm()
+            context['form']=form
             context['success']='pass all validations, inserting new client'
             return HttpResponse(template.render(context, request))
         else:

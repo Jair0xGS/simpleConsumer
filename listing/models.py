@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db import connection
 # Create your models here.
 class Zona(models.Model):
     zona= models.CharField(max_length=2,primary_key=True)
@@ -28,4 +28,24 @@ class Cliente(models.Model):
         db_table="cliente"
     def save(self,*args,**kwargs):
         self._meta.local_fields=[f for f in self._meta.local_fields if f.name not in ('idCliente')]
-        super().save(*args,**kwargs)
+        cursor=connection.cursor()
+        query= """EXEC _RegistrarCliente 
+        @nombre = '{nombre}', 
+        @tipo = {tipo},
+        @id='{id}',
+        @zona='{zona}',
+        @ruc='{ruc}',
+        @Direccion='{direccion}',
+        @credito='{credito}',
+        @tipocli='{tipocli}'
+        """.format(
+            nombre=self.nombre,
+            tipo =1,
+            tipocli=self.tipoCliente,
+            id=self.cliente,
+            zona=self.zona.zona,
+            ruc=self.ruc,
+            direccion=self.direccion,
+            credito=self.credito,
+        )
+        cursor.execute(query)
