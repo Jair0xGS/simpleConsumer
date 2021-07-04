@@ -5,32 +5,27 @@
 {% block content %}
 <div class="container">
 
-    <form>
+    <form action="/listing/" method="post">
+        {% csrf_token %}
         <div class="row">
             <div class="col">
                 <h2>Busqueda por nombre y RUC</h2>
             </div>
             <div class="col">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo">Agregar</button>
+                <a class="btn btn-primary" href="/listing/create">Agregar</a>
             </div>
         </div>
-
-        <div class="row pt-5">
-            <div class="col-6">
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre </label>
-                    <input type="text" class="form-control" id="nombre">
-                </div>
-
+        {% for field in form %}
+        <div class="mb-3 pt-5 row">
+            <label class="
+                col-sm-2 
+                col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+            <div class="col-sm-10">
+                {{ field }}
             </div>
-            <div class="col-6">
-                <div class="mb-3">
-                    <label for="ruc" class="form-label">RUC</label>
-                    <input type="number" class="form-control" id="ruc">
-                </div>
-            </div>
+
         </div>
+        {% endfor %}
         <button type="submit" class="btn btn-success">Buscar</button>
     </form>
 </div>
@@ -38,30 +33,27 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Zona</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">RUC</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Credito</th>
+            <th scope="col">TipoCliente</th>
         </tr>
     </thead>
     <tbody>
+        {% if resultados %}
+        {% for resultado in resultados %}
+
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+
+            {% for res in resultado %}
+            <td>{{res }}</td>
+            {% endfor %}
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
+        {% endfor %}
+        {% endif%}
     </tbody>
 </table>
 {% endblock %}

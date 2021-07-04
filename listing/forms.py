@@ -2,6 +2,10 @@ from django import forms
 from .models import Zona, Cliente
 from .validations import validate_ruc,validate_cliente
 
+# form to find client by name
+class FindClientForm(forms.Form):
+    nombre = forms.CharField(label="Nombre",max_length=100)
+    nombre.widget.attrs.update({'class': 'form-control'})
 
 # form to create new Client
 zonas = Zona.objects.all()
@@ -47,4 +51,3 @@ class ClientForm(forms.ModelForm):
             'tipoCliente',
 
         ]
-# form 
