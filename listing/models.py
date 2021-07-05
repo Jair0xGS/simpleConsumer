@@ -49,3 +49,12 @@ class Cliente(models.Model):
             credito=self.credito,
         )
         cursor.execute(query)
+class DetaDoc(models.Model):
+    documento= models.CharField(max_length=9,primary_key=True)
+    tipoDoc= models.CharField(max_length=1)
+    producto= models.CharField(max_length=4)
+    cantidad= models.FloatField(default=0.0)
+    igv= models.FloatField(default=0.0)
+    precunit= models.FloatField(default=0.0)
+    class Meta:
+        db_table="detadoc"
